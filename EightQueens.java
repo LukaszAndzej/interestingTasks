@@ -16,17 +16,42 @@ numbers n with the exception of n = 2 and n = 3.
 * Backtracking algorithm
 * */
 
+class PrintArray {
+
+    private static void printLine(int n) {
+        for(int i = 0; i <= (n*6); i++) {
+            System.out.print("-");
+        }
+        System.out.println();
+    }
+
+    static void printSolution(int[] array) {
+        int arrayLength = array.length;
+        printLine(arrayLength);
+        for (int k : array) {
+            for (int j = 0; j < arrayLength; j++) {
+                if (j == k) System.out.print("|  Q  ");
+                else System.out.print("|     ");
+            }
+            System.out.print("|");
+            System.out.println();
+            printLine(arrayLength);
+        }
+    }
+
+}
+
 public class EightQueens {
 
-    private final int widthOfChessboard;
+    private final int sizeOfChessboard;
 
     public EightQueens(int n) {
-        widthOfChessboard = n;
+        sizeOfChessboard = n;
     }
 
     private int[] queensPositionsInRow;
 
-    private boolean requirementsFromQueen(int queen) { return ((queen >= 0) && (queen < widthOfChessboard));}
+    private boolean requirementsFromQueen(int queen) { return ((queen >= 0) && (queen < sizeOfChessboard));}
 
     private boolean positionNotFound(int position) { return (position < 0);}
 
@@ -50,36 +75,16 @@ public class EightQueens {
 
     private int findPosition(int queen) {
 
-        for(int i = queensPositionsInRow[queen] + 1; i < widthOfChessboard; i++) {
+        for(int i = queensPositionsInRow[queen] + 1; i < sizeOfChessboard; i++) {
             if(savePositionForQueen(queen,i)) return i;
         }
 
         return -1;
     }
 
-    private void printLine(int n) {
-        for(int i = 0; i <= (n*6); i++) {
-            System.out.print("-");
-        }
-        System.out.println();
-    }
-
-    private void printSolution() {
-        printLine(widthOfChessboard);
-        for(int i = 0; i < widthOfChessboard; i++) {
-            for(int j = 0; j < widthOfChessboard; j++) {
-                if(j == queensPositionsInRow[i]) System.out.print("|  Q  ");
-                else System.out.print("|     ");
-            }
-            System.out.print("|");
-            System.out.println();
-            printLine(widthOfChessboard);
-        }
-    }
-
     public int[] solution() {
 
-        queensPositionsInRow = new int[widthOfChessboard];
+        queensPositionsInRow = new int[sizeOfChessboard];
         Arrays.fill(queensPositionsInRow,-1);
 
         int queenNumber = 0;
@@ -95,15 +100,14 @@ public class EightQueens {
             }
         }
 
-        printSolution();
+        PrintArray.printSolution(queensPositionsInRow);
 
         return queensPositionsInRow;
     }
 
-
     public static void main(String[] args) {
 
-        EightQueens queens = new EightQueens(4);
+        EightQueens queens = new EightQueens(8);
         System.out.println(Arrays.toString(queens.solution()));
 
     }

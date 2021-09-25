@@ -12,6 +12,8 @@ The bad-character rule considers the character in T at which the comparison proc
 and a shift which brings that occurrence in line with the mismatched occurrence in T is proposed.
 If the mismatched character does not occur to the left in P, a shift is proposed that moves
 the entirety of P past the point of mismatch.
+
+The worst case: O(n*m)
 * */
 
 class Match {

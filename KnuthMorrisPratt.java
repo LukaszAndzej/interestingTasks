@@ -10,7 +10,7 @@ We compare one by one a characters in the Text ( O(n) ) but we're using a Comput
 which gives us an array and this array tells us from where I should start comparing/matching
 character from pattern with character in the text.
 
-
+            The complexity of the overall algorithm is O(n + m)
 * */
 
 public class KnuthMorrisPratt {
@@ -50,29 +50,19 @@ public class KnuthMorrisPratt {
 
         int[] arrayPrefixOfPattern = computePrefixFunction(pattern);
 
-        int q = 0;
+        int prefix = 0;
         for(int i = 0; i < textLength; i++) {
-            while (backToEarlierCharacter(q, pattern.charAt(q), text.charAt(i))) {
-                q = arrayPrefixOfPattern[q];
+            while (backToEarlierCharacter(prefix, pattern.charAt(prefix), text.charAt(i))) {
+                prefix = arrayPrefixOfPattern[prefix];
             }
 
-            if(charactersAreTheSame(pattern.charAt(q),text.charAt(i))) q++;
+            if(charactersAreTheSame(pattern.charAt(prefix),text.charAt(i))) prefix++;
 
-            if(subtextIsTheSameWithPattern(q, patternLength)) {
+            if(subtextIsTheSameWithPattern(prefix, patternLength)) {
                 System.out.println("Found pattern in the text: " + (i - (patternLength - 1)) + "-" + i);
-                q = arrayPrefixOfPattern[q - 1];
+                prefix = arrayPrefixOfPattern[prefix - 1];
             }
         }
-    }
-
-    public static void main(String[] args) {
-        String s = "aabaabaaa";
-        String s1 = "abcdabca";
-        String text = "abdcabcabca";
-        String s2 = "abca";
-
-        KnuthMorrisPratt.matcher(text,s2);
-
     }
 
 }
